@@ -1,0 +1,75 @@
+// FOR TESTING API ROUTES
+
+//  for testing user authentication routes
+
+###
+// Get all users
+GET http://localhost:4000/api/auth
+
+###
+// Authenticate user with the access token which expires in 15 minutes.
+// Generate new access token once it expires with the refresh token.
+GET http://localhost:4000/api/auth/67b2d2a06e1cdfc0d8f3d717
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiSmFtZXNib25kIiwiaWF0IjoxNzM5NzkzNjYyLCJleHAiOjE3Mzk3OTQ1NjJ9.tTCo_np5KCSVs6piL4s6ZswNiUKeDgl2fWtKm8O16RA
+
+###
+// Register new user
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "Serah",
+    "email": "serahjones@gmail.com",
+    "password": "moonlight",
+    "gender": "female"
+}
+
+###
+// User login to get access and refresh tokens
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "jamesbond007@yahoo.com",
+    "password": "nature"
+}
+
+###
+// Authenticate user with the access token which expires in 15 minutes.
+// Generate new access token once it expires with the refresh token.
+GET http://localhost:4000/api/auth/user/dashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiSmFtZXNib25kIiwiaWF0IjoxNzM5NzkzNjYyLCJleHAiOjE3Mzk3OTQ1NjJ9.tTCo_np5KCSVs6piL4s6ZswNiUKeDgl2fWtKm8O16RA
+
+###
+// Update user record by the "user id" and by the user with the given token
+PATCH http://localhost:4000/api/auth/67b2eac05febc8952fb5fd49
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiUGV0ZXJzb24iLCJpYXQiOjE3Mzk3OTQ2MTEsImV4cCI6MTczOTc5NTUxMX0.nx_3YO7nTNEWHfNuZN9Ogib2rXTGebGLho0HNCbLhlg
+Content-Type: application/json
+
+{
+    "username": "Peterson",
+    "email": "peterson@hotmail.com"
+}
+
+###
+DELETE http://localhost:4000/api/auth/67b2d2a06e1cdfc0d8f3d717
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiUGV0ZXJzb24iLCJpYXQiOjE3Mzk3OTQ2MTEsImV4cCI6MTczOTc5NTUxMX0.nx_3YO7nTNEWHfNuZN9Ogib2rXTGebGLho0HNCbLhlg
+
+###
+// Use the refresh token in the database to get a new access and refresh tokens 
+POST http://localhost:4000/api/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiUGV0ZXJzb24iLCJpYXQiOjE3Mzk3OTQ2MTEsImV4cCI6MTc0MDM5OTQxMX0.TtCZFvx6lnJkeEl28HCbM2JAYb4jAXUE1fysOmAq3C8"
+}
+
+###
+// logout and set refresh token to "null" to prevent future use
+POST http://localhost:4000/api/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiSmFtZXNib25kIiwiaWF0IjoxNzM5NzkzNjYyLCJleHAiOjE3Mzk3OTQ1NjJ9.tTCo_np5KCSVs6piL4s6ZswNiUKeDgl2fWtKm8O16RA
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IyZDJhMDZlMWNkZmMwZDhmM2Q3MTciLCJuYW1lIjoiSmFtZXNib25kIiwiaWF0IjoxNzM5NzkzNjYyLCJleHAiOjE3NDAzOTg0NjJ9.ExXRzI_IgFglA_8LOHEQMJiZfLUNbfG1AtPYbfkX-M8"
+}
